@@ -104,10 +104,7 @@ public class MyVisitor extends SILBaseVisitor<String> {
 	
 	@Override
 	public String visitAssignment(AssignmentContext ctx) {
-		// TODO Auto-generated method stub
 		
-			
-			
 			
 		return "LOAD "+ ctx.getChild(0)+" "+ visitExpr(ctx.expr());
 		
@@ -116,8 +113,7 @@ public class MyVisitor extends SILBaseVisitor<String> {
 	}
 	//@Override
 	public String visitStatement(StatementContext ctx) {
-		// TODO Auto-generated method stub
-	
+		
 		sb.append(visit(ctx.getChild(0))+"\n");
 		return "";
 	}
