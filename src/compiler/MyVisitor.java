@@ -99,10 +99,7 @@ public class MyVisitor extends SILBaseVisitor<String> {
 		return aggregate+ "\n"+ nextResult;
 	}
 	
-	public String toString()
-	{
-		return sb.toString();
-	}
+	
 	
 	
 	@Override
