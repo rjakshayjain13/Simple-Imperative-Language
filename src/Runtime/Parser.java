@@ -8,53 +8,22 @@ import org.stringtemplate.v4.compiler.CodeGenerator.list_return;
 public class Parser {
 	static int  count = 0;
 	public static void ProcessTokens(List<String> tokens) {
-		int val1 , val2;
+		//int val1 , val2;
 		
-	
+	    if("ADDSUBMULDIV".contains(tokens.get(0)))
+	    {
+	    	processMathematicalOperation(tokens);
+	    }
+	    else if("LOADDISP".contains(tokens.get(0)))
+	    {
+	        processLOADDISP(tokens);	
+	    }
+	    else
+	    {
 		switch (tokens.get(0)) {
 	
-		case "DISP" : 		String print = Runtime.table.containsKey(tokens.get(1))? String.valueOf(Runtime.table.get(tokens.get(1))):tokens.get(1);
-							System.out.println(print);
-			break;
-		case "LOAD" : 		
-			String var = tokens.get(1);
-			int val = Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		case "CHECK" :
 			
-			Runtime.table.put(var, val);
-			
-			break;
-	
-		case "ADD" : 		 val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-							 val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-							//System.out.println(tokens.get(3)+"fdsfs");
-							Runtime.table.put(tokens.get(3), val1+val2);
-			break;
-		case "SUB" : 		val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-							val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-		
-							Runtime.table.put(tokens.get(3), val1-val2);
-			break;
-		case "MUL" : 		
-							
-							val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-							val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-							
-							Runtime.table.put(tokens.get(3), val1*val2);
-			break;
-		case "DIV" : 		val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-							val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-		
-							Runtime.table.put(tokens.get(3), val1/val2);
-			break;
-		case "GT" : 		val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-							val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-		
-							Runtime.table.put(tokens.get(3), val1-val2);
-			break;
-		case "CHECK" : 		
-			    
-				
-				{
 			 	List<String> tok=Runtime.getTokens(Runtime.scanner.nextLine()); 
 			 	
 			 	if(tok.size()==1)
@@ -65,11 +34,7 @@ public class Parser {
 			 		   Parser.ProcessTokens(Runtime.getTokens(Runtime.scanner.nextLine()));
 			 	   }
 			 	   else if(tok.get(0).equalsIgnoreCase("FALSE"))
-			 	   {/*
-			 		  while(!Runtime.getTokens(Runtime.scanner.nextLine()).get(0).equals("OR"))
-		 			   {
-		 			   
-		 			   }*/
+			 	   {
 			 		  List<String> ifElseTokens = null;
 		 			  while((!(ifElseTokens=Runtime.getTokens(Runtime.scanner.nextLine())).get(0).equals("OR") && !ifElseTokens.get(0).equals("STOP")))
 		 			   {
@@ -85,7 +50,7 @@ public class Parser {
 			 	   }
 			 			   
 			 	}
-			 	else if(tok.get(0).equals("LT"))
+			 	else if("NEGTLTLTEGTEEQL".contains(tok.get(0)))
 			 	{
 			 		
 			 		handleComparisions(tok);
@@ -94,31 +59,27 @@ public class Parser {
 			 	else
 			 	{
 			 		List<String> complex=tok;
-			 		while(!complex.get(0).equals("LT"))
+			 		while(!"NEGTLTLTEGTEEQL".contains(complex.get(0)))
 		 			   {
 			 				
 			 				Parser.ProcessTokens(complex);
 			 				complex=Runtime.getTokens(Runtime.scanner.nextLine());
 		 			   }
 			 		
-			 		handleComparisions(complex);
+			 		   handleComparisions(complex);
 			 	}
-				}
+				
 			break;
 			
 		case "OR" : 
 			
 					if(Runtime.stack.peek().equals("OR"))
 					{
-						//System.out.println(tokens);
-						//System.out.println(Runtime.stack);
-						//List<String> end = ;
 						while(!Runtime.getTokens(Runtime.scanner.nextLine()).get(0).equals("STOP"))
 			 			   {
-			 			 //  System.out.println(Runtime.scanner.nextLine()+"bhjS");
 							
 			 			   }
-						Runtime.stack.pop();
+					Runtime.stack.pop();
 					}
 			break;
 		case "STOP":
@@ -154,15 +115,78 @@ public class Parser {
 			
 			while(ProcessTokensComparisonTokens(condition))
 			{
-				for(List<String> loopLine:loopStatements)
+				for(int i=0; i<loopStatements.size(); i++)
 				{
-					System.out.println(loopLine);
-					Parser.ProcessTokens(loopLine);
+					List<String> loopLine = loopStatements.get(i);
+					if(loopLine.get(0).equalsIgnoreCase("CHECK"))
+					{
+						loopLine = loopStatements.get(++i);
+						System.out.println(loopLine);
+					}
+					//Parser.ProcessTokens(loopLine);
 				}
+				break;
 			}
 			break;
 	
 			default : break;
+		}
+	   }
+	}
+	static void processLOADDISP(List<String> tokens)
+	{
+		switch(tokens.get(0))
+		{
+		case "DISP" : 	
+			String print = Runtime.table.containsKey(tokens.get(1))? String.valueOf(Runtime.table.get(tokens.get(1))):tokens.get(1);
+			System.out.println(print);
+			break;
+			
+		case "LOAD" :
+			
+			String var = tokens.get(1);
+			int val = Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+			Runtime.table.put(var, val);
+			break;
+		}
+	}
+	static void processMathematicalOperation(List<String> tokens)
+	{
+		
+	  int val1 , val2;
+	  switch (tokens.get(0))
+	  {
+			
+		case "ADD" : 	
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		
+			Runtime.table.put(tokens.get(3), val1+val2);
+			break;
+			
+		case "SUB" :
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+	
+			Runtime.table.put(tokens.get(3), val1-val2);
+			break;
+			
+		case "MUL" : 		
+		
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		
+			Runtime.table.put(tokens.get(3), val1*val2);
+			break;
+				
+		case "DIV" : 		
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+	
+			Runtime.table.put(tokens.get(3), val1/val2);
+		
+		
+			break;
 		}
 	}
 	static List<List<String>> loopStatements=null;
@@ -199,27 +223,29 @@ public class Parser {
 		boolean check = false;
 		int val1=0 , val2;
 		
-		switch (tokens.get(0)) {
+		switch (tokens.get(0))
+		{
 		
 		case "LT" : 	
 			
-		val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
-		val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
 
 		
-		 if(val1<val2)
+			if(val1<val2)
 			 check = true;
 		 
-		break;
+			break;
 		
-		case "EQ" : 		 val1= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-		 val2= Runtime.table.containsKey(tokens.get(3))? Runtime.table.get(tokens.get(3)): Integer.parseInt(tokens.get(3));
+		case "EQ" :
+			val1= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+			val2= Runtime.table.containsKey(tokens.get(3))? Runtime.table.get(tokens.get(3)): Integer.parseInt(tokens.get(3));
 		
 		
-		 if(val1<val2)
+			if(val1<val2)
 			 check = true;
 		 
-		break;
+			break;
 		
 		
 		default:
@@ -228,6 +254,6 @@ public class Parser {
 		
 		}
 		
-		return check;
-	}
+	return check;
+   }
 }
