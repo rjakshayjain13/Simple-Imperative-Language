@@ -45,9 +45,12 @@ value
 	| Number
 	;
 
-Number  : [0-9]+
+Number  : (MINUS)? [0-9]+
 	;
 
+MINUS   : '-'
+	;
+	
 // If Statement (with optional else statement)
 ifstatement
 	: 'if' compexpr ':' (statement)+ ('else' (statement)+)? 'stop'
