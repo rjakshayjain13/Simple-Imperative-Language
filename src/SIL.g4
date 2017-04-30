@@ -71,7 +71,7 @@ Cop
 
 // While Statement
 whilestatement
-	: 'while' compexpr ':' (statement)+ 'stop'
+	: 'while' compexpr ':' (statement)+ 'end'
 	;
 
 // Print Statement
