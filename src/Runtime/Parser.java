@@ -1,14 +1,14 @@
-package Runtime;
+package runtime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.omg.SendingContext.RunTime;
-import org.stringtemplate.v4.compiler.CodeGenerator.list_return;
+
 
 public class Parser {
 	static int  count = 0;
 	public static void ProcessTokens(List<String> tokens) {
-		//int val1 , val2;
+		
 		
 	    if("ADDSUBMULDIV".contains(tokens.get(0)))
 	    {
@@ -86,22 +86,36 @@ public class Parser {
 			
 			
 			
-			       if(Runtime.stack.peek().equals("STOP") || Runtime.stack.peek().equals("OR"))
+			       if(!Runtime.stack.isEmpty() && (Runtime.stack.peek().equals("STOP") || Runtime.stack.peek().equals("OR")))
 			       {
 			    	   Runtime.stack.pop();
 			       }
 			
 			break;
+			
 		case "LOOP" : 
 			
-			List<String> condition = Runtime.getTokens(Runtime.scanner.nextLine());
+			List<String> condition = new ArrayList<String>();
+			condition.add(Runtime.scanner.nextLine());
+			String str = Runtime.scanner.nextLine();
+			List<String> conditionTokens = Runtime.getTokens(condition.get(0));
+			if(conditionTokens.size()!=1 && !"NEGTLTLTEGTEEQL".contains(conditionTokens.get(0)))
+			{
+
+				while("NEGTLTLTEGTEEQL".contains(Runtime.getTokens(str).get(0)))
+				{
+					condition.add(str);
+					str = Runtime.scanner.nextLine();;
+				}
+			}
 			//System.out.println(condition);
-			List<String> loopStatement = Runtime.getTokens(Runtime.scanner.nextLine());
+			//System.out.println(str);
+			List<String> loopStatement = Runtime.getTokens(str);
 			
 			loopStatements = new ArrayList<List<String>>();
 			loopStatements.add(new ArrayList<String>(loopStatement));
 			
-			while(!loopStatement.get(0).equals("END"))
+			while(!loopStatement.get(0).equals("LOOPEND"))
 			{
 				
 				loopStatement = Runtime.getTokens(Runtime.scanner.nextLine());
@@ -110,28 +124,129 @@ public class Parser {
 			}
 			
 			loopStatements.remove(loopStatements.size()-1);
-			System.out.println(loopStatements);
+			//System.out.println(loopStatements);
 			
 			
-			while(ProcessTokensComparisonTokens(condition))
+			while(processComplexExpForWhile(condition))
 			{
 				for(int i=0; i<loopStatements.size(); i++)
 				{
 					List<String> loopLine = loopStatements.get(i);
+					
 					if(loopLine.get(0).equalsIgnoreCase("CHECK"))
 					{
-						loopLine = loopStatements.get(++i);
-						System.out.println(loopLine);
+							loopLine = loopStatements.get(++i);
+						
+							while(loopLine.size()!=1 && !"NEGTLTLTEGTEEQL".contains(loopLine.get(0)))
+							{
+								if("ADDSUBMULDIV".contains(loopLine.get(0)))
+					 		    {
+					 		    	processMathematicalOperation(loopLine);
+					 		    }
+					 		    else if("LOADDISP".contains(loopLine.get(0)))
+					 		    {
+					 		        processLOADDISP(loopLine);	
+					 		    }
+								loopLine = loopStatements.get(++i);
+							}
+					
+							if((loopLine.size()==1 && loopLine.get(0).equalsIgnoreCase("true"))  || ProcessTokensComparisonTokens(loopLine))
+							{
+								
+						 			Runtime.stack.push("OR");
+						 			//loopLine = loopStatements.get(++i);
+						 			while(!((loopLine = loopStatements.get(++i)).get(0).equals("OR")) && !loopLine.get(0).equals("STOP"))
+						 			{
+							 			if("ADDSUBMULDIV".contains(loopLine.get(0)))
+							 		    {
+							 		    	processMathematicalOperation(loopLine);
+							 		    }
+							 		    else if("LOADDISP".contains(loopLine.get(0)))
+							 		    {
+							 		        processLOADDISP(loopLine);	
+							 		    }
+						 			}
+				 			
+								 	if(Runtime.stack.peek().equals("OR"))
+									{
+										while(i<loopStatements.size()-1 && !(loopStatements.get(++i)).get(0).equals("STOP"))
+							 			   {}
+										Runtime.stack.pop();
+									}
+				 			
+							}
+							else
+							{
+									List<String> ifElseTokens = null;
+									while((!(ifElseTokens=loopStatements.get(++i)).get(0).equals("OR") && !ifElseTokens.get(0).equals("STOP")))
+									{
+					 			      if(ifElseTokens.get(0).equals("CHECK"))
+					 			      {
+					 			    	 while((!(ifElseTokens=loopStatements.get(++i)).get(0).equals("STOP") ))
+					 			    	 {}
+					 			      }
+									}
+				 			 
+					 				while(!((loopLine = loopStatements.get(++i)).get(0).equals("STOP")))
+						 			{
+							 			if("ADDSUBMULDIV".contains(loopLine.get(0)))
+							 		    {
+							 		    	processMathematicalOperation(loopLine);
+							 		    }
+							 		    else if("LOADDISP".contains(loopLine.get(0)))
+							 		    {
+							 		        processLOADDISP(loopLine);	
+							 		    }
+						 			}
+				 			  
+							}	
+						
 					}
-					//Parser.ProcessTokens(loopLine);
+					else
+					{
+						if("ADDSUBMULDIV".contains(loopLine.get(0)))
+			 		    {
+			 		    	processMathematicalOperation(loopLine);
+			 		    }
+			 		    else if("LOADDISP".contains(loopLine.get(0)))
+			 		    {
+			 		        processLOADDISP(loopLine);	
+			 		    }
+					}
 				}
-				break;
+				
 			}
+			
 			break;
 	
-			default : break;
-		}
+		default : break;
+		
 	   }
+	  }
+	}
+	static boolean processComplexExpForWhile(List<String> tokens)
+	{
+		if(tokens.size()==1)
+		{
+			List<String> condTok =Runtime.getTokens(tokens.get(0));
+			
+			if(condTok.size()==1)
+			{
+				return condTok.get(0).equalsIgnoreCase("true")?true:false;
+			}
+			else
+			return ProcessTokensComparisonTokens(condTok);
+		}
+		for(String tok: tokens)
+		{
+			List<String> toks = Runtime.getTokens(tok);
+			if("ADDSUBMULDIV".contains(toks.get(0)))
+			{
+				processMathematicalOperation(toks);
+			}
+		}
+		
+		return ProcessTokensComparisonTokens(Runtime.getTokens(tokens.get(tokens.size()-1)));
 	}
 	static void processLOADDISP(List<String> tokens)
 	{
@@ -236,13 +351,49 @@ public class Parser {
 			 check = true;
 		 
 			break;
+		case "GT" : 	
+			
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+
 		
-		case "EQ" :
-			val1= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
-			val2= Runtime.table.containsKey(tokens.get(3))? Runtime.table.get(tokens.get(3)): Integer.parseInt(tokens.get(3));
+			if(val1<val2)
+			 check = true;
+		 
+			break;
+		case "EQL" :
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
 		
 		
 			if(val1<val2)
+			 check = true;
+		 
+			break;
+		case "NE" :
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		
+		
+			if(val1!=val2)
+			 check = true;
+		 
+			break;
+		case "GTE" :
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		
+		
+			if(val1>=val2)
+			 check = true;
+		 
+			break;
+		case "LTE" :
+			val1= Runtime.table.containsKey(tokens.get(1))? Runtime.table.get(tokens.get(1)): Integer.parseInt(tokens.get(1));
+			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
+		
+		
+			if(val1 <= val2)
 			 check = true;
 		 
 			break;
