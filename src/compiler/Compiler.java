@@ -28,11 +28,20 @@ public class Compiler {
 	public static void main(String[] args){
 		// TODO Auto-generated method stub
 	
-/**/
-	
+		String inputFilePath = "";
+		if(args.length==0)
+		{
+		System.out.println("Please Enter Path of source file");
+		System.exit(0);
+		}
+		else
+		{
+			inputFilePath = args[0];
+		}
+		
 		
 		try{
-			ANTLRFileStream input = new ANTLRFileStream("C:\\Users\\ACE\\workspace\\Compiler\\src\\compiler\\antlr.sil");
+			ANTLRFileStream input = new ANTLRFileStream(inputFilePath);
 			
 			SILLexer lexer = new SILLexer(input);
 
@@ -48,12 +57,16 @@ public class Compiler {
 			
 		    String intermediate= my.visit(tree);
 		    
-		    PrintWriter intermediateCodeWriter = new PrintWriter("intermediate.silc", "UTF-8");
+		    String inputFile[] = args[0].split("\\.");
+		    // This is to write our intermediate code to file
+		    PrintWriter intermediateCodeWriter = new PrintWriter(inputFile[0]+".silc");
 			
 			intermediateCodeWriter.println(intermediate);
 			
 			intermediateCodeWriter.close();
 			System.out.println(intermediate);
+			
+			// This is to visualize the parse tree
 			
 			JFrame frame = new JFrame("Antlr AST");
 	        JPanel panel = new JPanel();
