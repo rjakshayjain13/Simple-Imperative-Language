@@ -1,18 +1,10 @@
-Team members:
+Tasks:                                            Team members:
 
-Akshay Jain and Kapil Gupta
--- Akshay Jain and Kapil Gupta have worked on the design and the grammar of the language that will drive the implementation of the compiler, what tool is to be used(ANTLR v4) and which language to be used for the runtime environment, and which parsing technique is to be used.
-
-Upendra Singh and Abhijith Krishnan RadhaKrishna Kurup
--- Upendra Singh and Abhijith have worked on the design of the language and the documentation part of the milestone 2, how the parse tree of the source code will be displayed, how to remove the recursion in the language.
-
-Future Plan:
-  
-Upendra Singh and Abhijith Krishnan RadhaKrishna Kurup
-How lexer and parser will be going to handle the lexical analysis and semantic analysis repsectively in our language and will generate the tree and will analyze the way to reach from root to the leaf of the tree. By default, ANTLR will create listener interface which will have some function which should be defined while writing the class for generating the intermdiate code. They will define the function for enter and exit of a block and identifier. They will also document the work that they will be doing for final milestone.
-
-Akshay Jain and Kapil Gupta
-They will define the function for enter and exit of the statement, assignment for the intermediate code generation. How the runtime will be developed using the classes such as SIL(this class will take the code as input, triggers the VM), Tokens(responsible for generating tokens for the file given), symbol(represenattion of each symbol in symbol table), VM(handles all the operation to be handled during runtime). They will be using javadocs for documenting each class and other parts.
-
-All Team members:
-All team members will be involved in the youtube video demonstration which will explain the complete workflow of the language.
+Selecting Tools and Languages to work on          All
+Designing the grammar of SIL                      Akshay Jain, Kapil Gupta
+Documentation of Milestone 2                      Abhijith Krishnan RadhaKrishna Kurup, Upendra Singh
+Lexer and Parser                                  Kapil Gupta, Abhijith Krishnan RadhaKrishna Kurup
+Intermediate Code Generation                      Kapil Gupta, Akshay Jain
+Runtime Environment Development                   Upendra Singh, Abhijith Krishnan RadhaKrishna Kurup
+Unit and Integration Testing                      Akshay Jain, Upendra Singh
+Youtube Video                                     All
