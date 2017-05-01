@@ -1,0 +1,18 @@
+LOAD a 5
+LOAD b 7
+LOAD c 10
+DISP b
+CHECK 
+LT a b
+CHECK 
+GT c b
+DISP c
+OR 
+DISP b
+STOP
+add a 1 temp0
+LOAD a temp0
+OR 
+DISP c
+STOP
+
