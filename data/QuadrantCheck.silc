@@ -1,0 +1,44 @@
+LOAD x 0
+LOAD y -20
+CHECK 
+LT x 0
+CHECK 
+LT y 0
+DISP Quadrant3
+OR 
+CHECK 
+GT y 0
+DISP Quadrant2
+STOP
+STOP
+STOP
+CHECK 
+GT x 0
+CHECK 
+LT y 0
+DISP Quadrant4
+OR 
+CHECK 
+GT y 0
+DISP Quadrant1
+STOP
+STOP
+STOP
+CHECK 
+EQL x 0
+CHECK 
+NE y 0
+DISP onX
+OR 
+CHECK 
+EQL y 0
+DISP Origin
+STOP
+STOP
+OR 
+CHECK 
+EQL y 0
+DISP onY
+STOP
+STOP
+

@@ -1,0 +1,10 @@
+LOAD a 13
+LOAD b 1
+LOOP 
+LTE b 10
+MUL a b temp0
+DISP temp0
+ADD b 1 temp1
+LOAD b temp1
+LOOPEND 
+

@@ -1,0 +1,19 @@
+a = 83
+
+if a >= 91: 
+	disp GradeA
+else
+	if a >= 81:
+		disp GradeB
+	else
+		if a >= 71:
+			disp GradeC
+		else
+			if a >= 61:
+				disp GradeD
+			else
+				disp Fail
+			stop
+		stop
+	stop
+stop

@@ -1,0 +1,6 @@
+a = 13
+b = 1
+while b <= 10:
+	disp a * b
+	b = b + 1
+end

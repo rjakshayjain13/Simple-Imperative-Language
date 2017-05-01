@@ -1,0 +1,12 @@
+a = -9
+
+if a >= 0:
+	disp Modulus
+	disp a 
+else
+	if a < 0:
+		a = a * -1
+    		disp Modulus
+		disp a
+	stop
+stop

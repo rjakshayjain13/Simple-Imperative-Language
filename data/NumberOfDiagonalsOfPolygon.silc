@@ -1,0 +1,13 @@
+LOAD n 6
+CHECK 
+GT n 3
+SUB n 3 temp0
+LOAD m temp0
+MUL n m temp2
+DIV temp2 2 temp1
+LOAD s temp1
+DISP s
+OR 
+DISP Invalid
+STOP
+

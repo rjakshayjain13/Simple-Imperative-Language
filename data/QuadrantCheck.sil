@@ -1,0 +1,36 @@
+x = 0
+y = -20
+
+if x < 0:
+	if y < 0:
+    		disp Quadrant3 
+	else
+		if y > 0:
+			disp Quadrant2
+		stop
+	stop
+stop
+
+if x > 0:
+	if y < 0:
+    		disp Quadrant4 
+	else
+		if y > 0:
+			disp Quadrant1
+		stop
+	stop
+stop
+
+if x == 0:
+	if y ~= 0:
+    		disp onX 
+	else
+		if y == 0:
+			disp Origin
+		stop
+	stop
+else
+	if y == 0:
+		disp onY
+	stop
+stop

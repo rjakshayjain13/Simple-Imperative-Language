@@ -1,0 +1,8 @@
+n = 6
+if n > 3:
+	m = n - 3
+	s = n * m / 2
+	disp s
+else
+	disp Invalid
+stop

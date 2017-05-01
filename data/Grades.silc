@@ -1,0 +1,23 @@
+LOAD a 83
+CHECK 
+GTE a 91
+DISP GradeA
+OR 
+CHECK 
+GTE a 81
+DISP GradeB
+OR 
+CHECK 
+GTE a 71
+DISP GradeC
+OR 
+CHECK 
+GTE a 61
+DISP GradeD
+OR 
+DISP Fail
+STOP
+STOP
+STOP
+STOP
+

@@ -1,0 +1,19 @@
+a = 5
+b = 1
+c = a
+if a >= 1: 
+	while b < c:
+		a = a * b
+		b = b + 1
+		
+	end
+	disp Factorial
+	disp a
+else
+	if a == 0:
+		disp Factorial
+		disp 1
+	else
+		disp NoFactorial
+	stop
+stop

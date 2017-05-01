@@ -1,0 +1,19 @@
+LOAD BuyingPrice 100
+LOAD SellingPrice 110
+CHECK 
+SUB BuyingPrice SellingPrice temp0
+NE temp0 0
+CHECK 
+GT BuyingPrice SellingPrice
+SUB SellingPrice BuyingPrice temp1
+LOAD Loss temp1
+DISP Loss
+OR 
+SUB SellingPrice BuyingPrice temp2
+LOAD Profit temp2
+DISP Profit
+STOP
+OR 
+DISP 0
+STOP
+

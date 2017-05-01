@@ -1,0 +1,14 @@
+BuyingPrice = 100 
+SellingPrice = 110
+
+if BuyingPrice - SellingPrice ~= 0:
+	if BuyingPrice > SellingPrice:
+		Loss = SellingPrice - BuyingPrice 
+    		disp Loss 
+	else
+		Profit = SellingPrice - BuyingPrice
+    		disp Profit
+	stop
+else
+	disp 0
+stop

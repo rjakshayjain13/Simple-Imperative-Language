@@ -1,0 +1,15 @@
+LOAD a -9
+CHECK 
+GTE a 0
+DISP Modulus
+DISP a
+OR 
+CHECK 
+LT a 0
+MUL a -1 temp0
+LOAD a temp0
+DISP Modulus
+DISP a
+STOP
+STOP
+

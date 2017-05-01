@@ -1,0 +1,8 @@
+a = 8
+b = 4
+c = 12
+
+sa = a * b + b * c + c * a
+tsa = 2 * sa
+
+disp tsa

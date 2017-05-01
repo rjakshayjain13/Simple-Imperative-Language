@@ -1,0 +1,24 @@
+LOAD a 5
+LOAD b 1
+LOAD c a
+CHECK 
+GTE a 1
+LOOP 
+LT b c
+MUL a b temp0
+LOAD a temp0
+ADD b 1 temp1
+LOAD b temp1
+LOOPEND 
+DISP Factorial
+DISP a
+OR 
+CHECK 
+EQL a 0
+DISP Factorial
+DISP 1
+OR 
+DISP NoFactorial
+STOP
+STOP
+
