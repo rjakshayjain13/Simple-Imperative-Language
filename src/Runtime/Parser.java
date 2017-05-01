@@ -24,6 +24,8 @@ public class Parser {
 	
 		case "CHECK" :
 			
+			// This block handles if then else and nested if else branching
+			
 			 	List<String> tok=Runtime.getTokens(Runtime.scanner.nextLine()); 
 			 	
 			 	if(tok.size()==1)
@@ -73,7 +75,7 @@ public class Parser {
 			
 		case "OR" : 
 			
-					if(Runtime.stack.peek().equals("OR"))
+					if(!Runtime.stack.isEmpty() && Runtime.stack.peek().equals("OR"))
 					{
 						while(!Runtime.getTokens(Runtime.scanner.nextLine()).get(0).equals("STOP"))
 			 			   {
@@ -94,6 +96,8 @@ public class Parser {
 			break;
 			
 		case "LOOP" : 
+			
+			// This block handles loop 
 			
 			List<String> condition = new ArrayList<String>();
 			condition.add(Runtime.scanner.nextLine());
@@ -126,7 +130,7 @@ public class Parser {
 			loopStatements.remove(loopStatements.size()-1);
 			//System.out.println(loopStatements);
 			
-			
+			// This loop executes the actual statements within a loop
 			while(processComplexExpForWhile(condition))
 			{
 				for(int i=0; i<loopStatements.size(); i++)
@@ -224,6 +228,9 @@ public class Parser {
 	   }
 	  }
 	}
+	
+	//This method handles complex comparison expressions for while loop condition
+	
 	static boolean processComplexExpForWhile(List<String> tokens)
 	{
 		if(tokens.size()==1)
@@ -248,6 +255,8 @@ public class Parser {
 		
 		return ProcessTokensComparisonTokens(Runtime.getTokens(tokens.get(tokens.size()-1)));
 	}
+	
+	//This method handles Load and Print statements
 	static void processLOADDISP(List<String> tokens)
 	{
 		switch(tokens.get(0))
@@ -265,6 +274,8 @@ public class Parser {
 			break;
 		}
 	}
+	
+	// This method handles basic mathematical operations 
 	static void processMathematicalOperation(List<String> tokens)
 	{
 		
@@ -305,6 +316,7 @@ public class Parser {
 		}
 	}
 	static List<List<String>> loopStatements=null;
+	//This method handles comparison statements which are used for while or if
 	public static void handleComparisions(List<String> tok)
 	{
 		
@@ -331,6 +343,9 @@ public class Parser {
  			   Parser.ProcessTokens(Runtime.getTokens(Runtime.scanner.nextLine()));
  		}
 	}
+	
+	//This method handles all < , > <=< >=, ~=,==
+	 
 	public static boolean ProcessTokensComparisonTokens(List<String> tokens) 
 	{
 		
@@ -357,7 +372,7 @@ public class Parser {
 			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
 
 		
-			if(val1<val2)
+			if(val1>val2)
 			 check = true;
 		 
 			break;
@@ -366,7 +381,7 @@ public class Parser {
 			val2= Runtime.table.containsKey(tokens.get(2))? Runtime.table.get(tokens.get(2)): Integer.parseInt(tokens.get(2));
 		
 		
-			if(val1<val2)
+			if(val1==val2)
 			 check = true;
 		 
 			break;

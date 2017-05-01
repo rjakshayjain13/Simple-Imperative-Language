@@ -1,8 +1,7 @@
-package Runtime;
+package runtime;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +14,33 @@ public class Runtime {
 	
 	public static int LineNumber = 0;
 	public static ArrayList<String> records = new ArrayList<String>();
+	// Symbol Table
 	public static HashMap<String, Integer> table = new HashMap<String, Integer>();
+	
+	
 	public static Stack<String> stack = new Stack<String>();
 	static Scanner scanner = null;
 	public static void main(String[] args) {
 		
 		
-		String path = "C:\\Users\\ACE\\workspace\\Compiler\\src\\compiler\\intermediate.silc";
+		String inputFilePath = "";//"C:\\Users\\ACE\\workspace\\Compiler\\codes\\QuadrantCheck.silc";
+		if(args.length==0)
+		{
+		System.out.println("Please Enter Path of source file");
+		System.exit(0);
+		}
+		else
+		{
+			inputFilePath = args[0];
+		}
 		
-		try {
-			scanner = new Scanner(Paths.get(path));
-			while (scanner.hasNext()){
-			//	System.out.println(scanner.nextLine());
+
+		try 
+		{
+			scanner = new Scanner(Paths.get(inputFilePath));
+			while (scanner.hasNext())
+			{
+		
 				 List<String> tokens = getTokens(scanner.nextLine());
 				 Parser.ProcessTokens(tokens); 
 				// System.out.println(tokens);
@@ -34,16 +48,17 @@ public class Runtime {
 		
 			
 		}
-			catch(Exception e)
+		catch(Exception e)
 			{
-				
+				e.printStackTrace();
 			}
 
 	}
 
-
+	// This method is to generate tokens from  each input line from intermediate code
 	
-	public static List<String> getTokens(String str) {
+	public static List<String> getTokens(String str) 
+	{
 		List<String> tokens = new ArrayList<String>();
 		String regex = "\"([^\"]*)\"|(\\S+)";
 		Matcher m = Pattern.compile(regex).matcher(str);
