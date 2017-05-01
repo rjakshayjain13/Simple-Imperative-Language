@@ -17,78 +17,68 @@ public class SILBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SI
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override 
-	public T visitProgram(SILParser.ProgramContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProgram(SILParser.ProgramContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override 
-	public T visitStatement(SILParser.StatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStatement(SILParser.StatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override 
-	public T visitAssignment(SILParser.AssignmentContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAssignment(SILParser.AssignmentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitExpr(SILParser.ExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExpr(SILParser.ExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitSubexpr(SILParser.SubexprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSubexpr(SILParser.SubexprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitValue(SILParser.ValueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitValue(SILParser.ValueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitIfstatement(SILParser.IfstatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIfstatement(SILParser.IfstatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitCompexpr(SILParser.CompexprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitCompexpr(SILParser.CompexprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override
-	public T visitWhilestatement(SILParser.WhilestatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWhilestatement(SILParser.WhilestatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	//@Override 
-	public T visitPrint(SILParser.PrintContext ctx) { return visitChildren(ctx); }
+	@Override public T visitPrint(SILParser.PrintContext ctx) { return visitChildren(ctx); }
 }
